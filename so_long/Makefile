@@ -1,9 +1,9 @@
 SRCS		=	so_long.c map_check.c controls_manager.c map_check_utils.c \
-				flood_fill.c sprites.c controls_manager_utils.c
+                flood_fill.c sprites.c controls_manager_utils.c
 INCLUDE		=	include
 LIBFT		=	libft
 FTPRINTF	=	ftprintf
-OBJDIR		=	obj/
+OBJDIR		=	objs/
 OBJS		=	$(SRCS:%.c=$(OBJDIR)%.o)
 CC			=	cc -I$(INCLUDE) #-Wall -Wextra -Werror
 RM			=	rm -f
@@ -27,6 +27,7 @@ clean:
 			$(RM) $(OBJS)
 			@rm -rf $(OBJDIR)
 			make -C  $(LIBFT) clean
+
 fclean:		clean
 			$(RM) $(NAME)
 			make -C $(LIBFT) fclean

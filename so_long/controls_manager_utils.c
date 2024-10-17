@@ -13,15 +13,18 @@
 #include "libft.h"
 #include "so_long.h"
 
-void	check_floor(t_vars *vars)
+int	check_floor(t_vars *vars)
 {
 	if (vars->map[vars->player_pos_row][vars->player_pos_column] == '@')
 	{
 		vars->map[vars->player_pos_row][vars->player_pos_column] = ' ';
-        vars->n_collectables += 1;
-    }
-    if(vars->collectables == vars->n_collectables)
-    {
-        vars->map[vars->end_pos_row][vars->end_pos_column] = '0';
-    }
+		vars->n_collectables += 1;
+	}
+	if (vars->collectables == vars->n_collectables
+		&& vars->map[vars->player_pos_row][vars->player_pos_column] == 'X')
+	{
+		vars->map[vars->player_pos_row][vars->player_pos_column] = 'x';
+        return(1);
+	}
+    return (0);
 }

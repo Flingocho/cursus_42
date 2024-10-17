@@ -42,6 +42,7 @@ typedef struct s_vars
 	void	*obstacle_ptr;
 	void	*collectable_ptr;
 	void	*endtile_ptr;
+	void	*endtile_end_ptr;
 	//CHAR PTRS
 	char	*map_path;
 	char	*player_path;
@@ -49,6 +50,7 @@ typedef struct s_vars
 	char	*obstacle_path;
 	char	*collectable_path;
 	char	*endtile_path;
+	char	*endtile_end_path;
 	//IMG DATA
 	int		img_width;
 	int		img_height;
@@ -88,6 +90,6 @@ int			key_w(int keycode, t_vars *vars);
 int			key_s(int keycode, t_vars *vars);
 int			key_a(int keycode, t_vars *vars);
 int			key_d(int keycode, t_vars *vars);
-void 		check_floor(t_vars *vars);
+int 		check_floor(t_vars *vars);
 
 #endif

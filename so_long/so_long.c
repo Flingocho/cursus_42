@@ -30,6 +30,5 @@ int	main(int argc, char **argv)
 	mlx_key_hook(vars.win, key_hook, &vars);
 	check_map(&vars);
 	mlx_loop(vars.mlx);
-	free(vars.buffer);
 	return (0);
 }
