@@ -43,7 +43,7 @@ static int	word_len(char *str, char c)
 	return (len);
 }
 
-static void	*clear_split(char **split)
+static int	*clear_split(char **split)
 {
 	int	i;
 
@@ -51,6 +51,7 @@ static void	*clear_split(char **split)
 	while (split[i])
 	{
 		free(split[i]);
+		split[i] = NULL;
 		i++;
 	}
 	free(split);
@@ -74,7 +75,7 @@ char	**ft_split(char const *s, char c)
 			index[2] = word_len((char *)&s[index[0]], c) + 1;
 			split[index[1]] = (char *)ft_calloc(index[2], sizeof(char));
 			if (!split[index[1]])
-				return (clear_split(split));
+				return ((char **)clear_split(split));
 			ft_strlcpy(split[index[1]], &s[index[0]], index[2]);
 			index[0] += index[2] - 1;
 			index[1]++;

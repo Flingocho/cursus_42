@@ -22,12 +22,12 @@ static void	get_sprites_info(t_vars *vars)
 	vars->endtile_path = "sprites/end.xpm";
 	vars->floor_path = "sprites/floor.xpm";
 	vars->endtile_end_path = "sprites/end_end.xpm";
-	ft_printf("PATHS PLACED!!\n");
+	vars->img_width = SPRITE_SIZE;
+	vars->img_height = SPRITE_SIZE;
 }
 
 void	init_sprites(t_vars *vars)
 {
-	ft_printf("We spriting!!\n");
 	get_sprites_info(vars);
 	vars->obstacle_ptr = mlx_xpm_file_to_image(vars->mlx, vars->obstacle_path,
 			&vars->img_width, &vars->img_height);
@@ -41,9 +41,11 @@ void	init_sprites(t_vars *vars)
 			&vars->img_width, &vars->img_height);
 	vars->endtile_end_ptr = mlx_xpm_file_to_image(vars->mlx,
 			vars->endtile_end_path, &vars->img_width, &vars->img_height);
+		//NUMBERS HERE render function for numbers :)
 	vars->player_pos_column = vars->start_pos_column;
 	vars->player_pos_row = vars->start_pos_row;
-	ft_printf("IMGS PLACED!!\n");
+	vars->can_move = 1;
+	vars->moves = 0;
 }
 
 static void	put_img(t_vars *vars, int y, int x)

@@ -25,11 +25,31 @@ int	check_perimeter(t_vars *vars)
 	while (vars->map[j] && (vars->map[j][0] == '1'
 			&& vars->map[j][vars->map_columns - 1] == '1'))
 		j++;
-	ft_printf("i = %d, j = %d, rows = %d, columns = %d\n", i, j, vars->map_rows,
-		vars->map_columns);
 	if (i == vars->map_columns && j == vars->map_rows)
 		return (1);
 	return (-1);
+}
+
+int check_invalid_char(t_vars *vars)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < vars->map_rows)
+	{
+		j = 0;
+		while (j < vars->map_columns)
+		{
+			if (vars->map[i][j] != '1' && vars->map[i][j] != '0'
+				&& vars->map[i][j] != 'P' && vars->map[i][j] != 'E'
+				&& vars->map[i][j] != 'C' && vars->map[i][j] != 'X')
+				return (-1);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	check_c(t_vars *vars)
@@ -91,7 +111,6 @@ void	set_pe(t_vars *vars)
 	int	j;
 
 	i = 0;
-	ft_printf("DENTRO\n");
 	while (i < vars->map_rows)
 	{
 		j = 0;

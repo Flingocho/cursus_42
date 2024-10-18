@@ -16,62 +16,66 @@
 int	key_esc(int keycode, t_vars *vars)
 {
 	printf("(ESC) ¡Bye! :D\n");
-	mlx_destroy_window(vars->mlx, vars->win);
-	mlx_destroy_display(vars->mlx);
-	free(vars->mlx);
+	free_resources(vars);
 	exit(1);
 }
 
 int	key_w(int keycode, t_vars *vars)
 {
-	printf("Pressed: w\n");
 	mlx_clear_window(vars->mlx, vars->win);
-	if (vars->map[vars->player_pos_row - 1][vars->player_pos_column] != '1')
+	if (vars->can_move && vars->map[vars->player_pos_row
+		- 1][vars->player_pos_column] != '1')
 	{
 		vars->player_pos_row -= 1;
 		check_floor(vars);
+		render_window(vars);
+		return (1);
 	}
 	render_window(vars);
-	return (1);
+	return (0);
 }
 
 int	key_s(int keycode, t_vars *vars)
 {
-	ft_printf("Pressed: s\n");
 	mlx_clear_window(vars->mlx, vars->win);
-	if (vars->map[vars->player_pos_row + 1][vars->player_pos_column] != '1')
+	if (vars->can_move && vars->map[vars->player_pos_row
+		+ 1][vars->player_pos_column] != '1')
 	{
 		vars->player_pos_row += 1;
 		check_floor(vars);
+		render_window(vars);
+		return (1);
 	}
 	render_window(vars);
-	return (1);
+	return (0);
 }
 
 int	key_a(int keycode, t_vars *vars)
 {
+	mlx_clear_window(vars->mlx, vars->win);
+	if (vars->can_move
+		&& vars->map[vars->player_pos_row][vars->player_pos_column - 1] != '1')
 	{
-		ft_printf("Pressed: a\n");
-		mlx_clear_window(vars->mlx, vars->win);
-		if (vars->map[vars->player_pos_row][vars->player_pos_column - 1] != '1')
-		{
-			vars->player_pos_column -= 1;
-			check_floor(vars);
-		}
+		vars->player_pos_column -= 1;
+		check_floor(vars);
 		render_window(vars);
 		return (1);
 	}
+	render_window(vars);
+	return (0);
 }
 
 int	key_d(int keycode, t_vars *vars)
 {
-	ft_printf("Pressed: a\n");
 	mlx_clear_window(vars->mlx, vars->win);
-	if (vars->map[vars->player_pos_row][vars->player_pos_column + 1] != '1')
+	if (vars->can_move
+		&& vars->map[vars->player_pos_row][vars->player_pos_column + 1] != '1')
 	{
 		vars->player_pos_column += 1;
 		check_floor(vars);
+		render_window(vars);
+		return (1);
 	}
 	render_window(vars);
-	return (1);
+	return (0);
 }

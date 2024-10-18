@@ -18,7 +18,6 @@ int	check_flood(t_vars *vars)
 	if (vars->start_pos_row < 0 || vars->start_pos_column < 0
 		|| vars->start_pos_column >= vars->map_columns || vars->start_pos_row >= vars->map_rows)
 		return (-1);
-	printf("Seems good\n");
 	flood_fill(vars);
 	if (vars->map[vars->end_pos_row][vars->end_pos_column] == 'X' && vars->n_collectables == 0)
 		return (1);
@@ -46,7 +45,6 @@ static void	f_fill(t_vars *vars, char *target, int row, int col)
 	f_fill(vars, target, row + 1, col);
 	f_fill(vars, target, row, col - 1);
 	f_fill(vars, target, row, col + 1);
-	printf("%d collectables left!\n", vars->n_collectables);
 }
 
 void	flood_fill(t_vars *vars)
@@ -56,8 +54,6 @@ void	flood_fill(t_vars *vars)
 	target[0] = '0';
 	target[1] = 'C';
 	target[2] = 'E';
-	ft_printf("%c and %c are the targets!\n", target[0], target[1]);
-	ft_printf("%d,%d is the P position!\n", vars->start_pos_row, vars->start_pos_column);
 	f_fill(vars, target, vars->start_pos_row, vars->start_pos_column);
 }
 
