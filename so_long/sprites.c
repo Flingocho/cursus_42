@@ -26,6 +26,30 @@ static void	get_sprites_info(t_vars *vars)
 	vars->img_height = SPRITE_SIZE;
 }
 
+void	render_number(t_vars *vars)
+{
+	vars->n_0 = mlx_xpm_file_to_image(vars->mlx, "sprites/0.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_1 = mlx_xpm_file_to_image(vars->mlx, "sprites/1.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_2 = mlx_xpm_file_to_image(vars->mlx, "sprites/2.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_3 = mlx_xpm_file_to_image(vars->mlx, "sprites/3.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_4 = mlx_xpm_file_to_image(vars->mlx, "sprites/4.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_5 = mlx_xpm_file_to_image(vars->mlx, "sprites/5.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_6 = mlx_xpm_file_to_image(vars->mlx, "sprites/6.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_7 = mlx_xpm_file_to_image(vars->mlx, "sprites/7.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_8 = mlx_xpm_file_to_image(vars->mlx, "sprites/8.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->n_9 = mlx_xpm_file_to_image(vars->mlx, "sprites/9.xpm",
+			&vars->img_width, &vars->img_height);
+}
+
 void	init_sprites(t_vars *vars)
 {
 	get_sprites_info(vars);
@@ -41,7 +65,7 @@ void	init_sprites(t_vars *vars)
 			&vars->img_width, &vars->img_height);
 	vars->endtile_end_ptr = mlx_xpm_file_to_image(vars->mlx,
 			vars->endtile_end_path, &vars->img_width, &vars->img_height);
-		//NUMBERS HERE render function for numbers :)
+	render_number(vars);
 	vars->player_pos_column = vars->start_pos_column;
 	vars->player_pos_row = vars->start_pos_row;
 	vars->can_move = 1;

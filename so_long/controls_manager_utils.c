@@ -57,14 +57,28 @@ void	free_resources(t_vars *vars)
 		mlx_destroy_image(vars->mlx, vars->endtile_ptr);
 	if (vars->endtile_end_ptr)
 		mlx_destroy_image(vars->mlx, vars->endtile_end_ptr);
+	if (vars->n_0)
+		mlx_destroy_image(vars->mlx, vars->n_0);
+	if (vars->n_1)
+		mlx_destroy_image(vars->mlx, vars->n_1);
+	if (vars->n_2)
+		mlx_destroy_image(vars->mlx, vars->n_2);
+	if (vars->n_3)
+		mlx_destroy_image(vars->mlx, vars->n_3);
+	if (vars->n_4)
+		mlx_destroy_image(vars->mlx, vars->n_4);
+	if (vars->n_5)
+		mlx_destroy_image(vars->mlx, vars->n_5);
+	if (vars->n_6)
+		mlx_destroy_image(vars->mlx, vars->n_6);
+	if (vars->n_7)
+		mlx_destroy_image(vars->mlx, vars->n_7);
+	if (vars->n_8)
+		mlx_destroy_image(vars->mlx, vars->n_8);
+	if (vars->n_9)
+		mlx_destroy_image(vars->mlx, vars->n_9);
 	if (vars->win)
 		mlx_destroy_window(vars->mlx, vars->win);
-	if (vars->units)
-		mlx_destroy_image(vars->mlx, vars->units);
-	if (vars->tens)
-		mlx_destroy_image(vars->mlx, vars->tens);
-	if (vars->hundreds)
-		mlx_destroy_image(vars->mlx, vars->hundreds);
 	if (vars->mlx)
 	{
 		mlx_destroy_display(vars->mlx);
