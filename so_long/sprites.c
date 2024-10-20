@@ -107,6 +107,13 @@ void	render_window(t_vars *vars)
 		}
 		i++;
 	}
+	i = 0;
+	while (i < vars->map_columns)
+	{
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->floor_ptr,
+			i++ * SPRITE_SIZE, (vars->map_rows)
+			* SPRITE_SIZE);
+	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_ptr,
 		vars->player_pos_column * SPRITE_SIZE, vars->player_pos_row
 		* SPRITE_SIZE);

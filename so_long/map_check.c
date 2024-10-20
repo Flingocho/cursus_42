@@ -40,6 +40,7 @@ int	alloc_buffer(t_vars *vars)
 	if (vars->bytes_read == -1)
 		return (-1);
 	vars->buffer[vars->bytes_read] = '\0';
+	close(vars->fd);
 	while (vars->buffer[i++] != '\0')
 		if (vars->buffer[i] == '\0' && i <= vars->bytes_read)
 			return (1);
@@ -51,7 +52,7 @@ int	set_matrix(t_vars *vars)
 	if (alloc_buffer(vars) == -1)
 	{
 		close(vars->fd);
-		return(error_print("Eror allocation."));
+		return (error_print("Eror allocation."));
 	}
 	ft_printf("%s\n", vars->buffer);
 	vars->map = ft_split(vars->buffer, '\n');
@@ -73,8 +74,9 @@ int	key_hook(int keycode, t_vars *vars)
 		vars->moves += key_a(keycode, vars);
 	if (keycode == XK_d)
 		vars->moves += key_d(keycode, vars);
+	if (vars->moves >= 999)
+		vars->moves = 999;
 	str = ft_itoa(vars->moves);
-	mlx_string_put(vars->mlx, vars->win, 50, 50, 0x00FF0000, str);
 	render_moves(vars, str);
 	free(str);
 	ft_printf("counter = %d\n", vars->moves);

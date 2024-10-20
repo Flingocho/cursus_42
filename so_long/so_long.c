@@ -67,6 +67,14 @@ void	init_vars(t_vars *vars)
 	vars->n_9 = NULL;
 }
 
+int close_window(t_vars *vars)
+{
+    printf("Window closed. Exiting...\n");
+    free_resources(vars);
+    exit(0);
+    return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
@@ -86,6 +94,7 @@ int	main(int argc, char **argv)
 	vars.win = mlx_new_window(vars.mlx, vars.map_columns * 32, (vars.map_rows
 				+ 1) * 32, "SO_LONG!");
 	mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_hook(vars.win, 17, 0, close_window, &vars);
 	if (check_map(&vars) == -1)
 		return (error_print("Aborting\n"));
 	mlx_loop(vars.mlx);

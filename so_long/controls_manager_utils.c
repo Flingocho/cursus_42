@@ -45,6 +45,7 @@ void	free_resources(t_vars *vars)
 			free(vars->map[i++]);
 		free(vars->map);
 	}
+
 	if (vars->player_ptr)
 		mlx_destroy_image(vars->mlx, vars->player_ptr);
 	if (vars->floor_ptr)

@@ -13,9 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGTH 1080
-# define BUFF_SIZE 100000
+# define BUFF_SIZE 4096
 # define SPRITE_SIZE 32
 
 # include "mlx.h"
