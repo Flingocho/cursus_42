@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 22:54:47 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 02:39:09 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:15:12 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_perimeter(t_vars *vars)
 	return (-1);
 }
 
-int check_invalid_char(t_vars *vars)
+int	check_invalid_char(t_vars *vars)
 {
 	int	i;
 	int	j;
@@ -43,7 +43,8 @@ int check_invalid_char(t_vars *vars)
 		{
 			if (vars->map[i][j] != '1' && vars->map[i][j] != '0'
 				&& vars->map[i][j] != 'P' && vars->map[i][j] != 'E'
-				&& vars->map[i][j] != 'C' && vars->map[i][j] != 'X')
+				&& vars->map[i][j] != 'C' && vars->map[i][j] != 'X'
+				&& vars->map[i][j] != 'C' && vars->map[i][j] != 'K')
 				return (-1);
 			j++;
 		}
@@ -121,7 +122,7 @@ void	set_pe(t_vars *vars)
 				vars->start_pos_column = j;
 				vars->start_pos_row = i;
 				vars->map[i][j] = '0';
-				ft_printf("i = %d j = %d\n",i, j);
+				ft_printf("i = %d j = %d\n", i, j);
 			}
 			if (vars->map[i][j] == 'E')
 			{

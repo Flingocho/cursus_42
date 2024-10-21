@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:10:57 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 01:25:17 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:30:46 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,13 @@ void	free_resources(t_vars *vars)
 		mlx_destroy_image(vars->mlx, vars->n_8);
 	if (vars->n_9)
 		mlx_destroy_image(vars->mlx, vars->n_9);
+	if (vars->enemy_ptr)
+		mlx_destroy_image(vars->mlx, vars->enemy_ptr);
+	if (vars->win_buffer)
+		mlx_destroy_image(vars->mlx, vars->win_buffer);
 	if (vars->win)
 		mlx_destroy_window(vars->mlx, vars->win);
+
 	if (vars->mlx)
 	{
 		mlx_destroy_display(vars->mlx);

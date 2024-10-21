@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:44:12 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 02:20:38 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:13:01 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	get_sprites_info(t_vars *vars)
 	vars->endtile_end_path = "sprites/end_end.xpm";
 	vars->img_width = SPRITE_SIZE;
 	vars->img_height = SPRITE_SIZE;
+	vars->enemy_path = "sprites/enemy.xpm";
 }
 
 void	render_number(t_vars *vars)
@@ -65,6 +66,8 @@ void	init_sprites(t_vars *vars)
 			&vars->img_width, &vars->img_height);
 	vars->endtile_end_ptr = mlx_xpm_file_to_image(vars->mlx,
 			vars->endtile_end_path, &vars->img_width, &vars->img_height);
+	vars->enemy_ptr = mlx_xpm_file_to_image(vars->mlx, vars->enemy_path,
+			&vars->img_width, &vars->img_height);
 	render_number(vars);
 	vars->player_pos_column = vars->start_pos_column;
 	vars->player_pos_row = vars->start_pos_row;
@@ -80,7 +83,7 @@ static void	put_img(t_vars *vars, int y, int x)
 	if (vars->map[y][x] == 'X')
 		mlx_put_image_to_window(vars->mlx, vars->win, vars->endtile_ptr, x
 			* SPRITE_SIZE, y * SPRITE_SIZE);
-	if (vars->map[y][x] == ' ')
+	if (vars->map[y][x] == ' ' || vars->map[y][x] == 'K')
 		mlx_put_image_to_window(vars->mlx, vars->win, vars->floor_ptr, x
 			* SPRITE_SIZE, y * SPRITE_SIZE);
 	if (vars->map[y][x] == '@')
@@ -110,10 +113,13 @@ void	render_window(t_vars *vars)
 	i = 0;
 	while (i < vars->map_columns)
 	{
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->floor_ptr,
-			i++ * SPRITE_SIZE, (vars->map_rows)
-			* SPRITE_SIZE);
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->floor_ptr, i++
+			* SPRITE_SIZE, (vars->map_rows) * SPRITE_SIZE);
 	}
+	if (vars->enemy_exists == 1)
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->enemy_ptr,
+			vars->enemy_pos_column * SPRITE_SIZE, vars->enemy_pos_row
+			* SPRITE_SIZE);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_ptr,
 		vars->player_pos_column * SPRITE_SIZE, vars->player_pos_row
 		* SPRITE_SIZE);

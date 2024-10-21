@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:47:39 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 01:40:35 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:12:20 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void	init_vars(t_vars *vars)
 	vars->n_7 = NULL;
 	vars->n_8 = NULL;
 	vars->n_9 = NULL;
+	vars->enemy_ptr = NULL;
+	vars->enemy_ptr = NULL;
+	vars->enemy_pos_column = 0;
+	vars->enemy_pos_row  = 0;
+	vars->enemy_exists = 0;
+	vars->win_buffer = NULL;
 }
 
 int close_window(t_vars *vars)
@@ -94,6 +100,7 @@ int	main(int argc, char **argv)
 	vars.win = mlx_new_window(vars.mlx, vars.map_columns * 32, (vars.map_rows
 				+ 1) * 32, "SO_LONG!");
 	mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_do_key_autorepeaton(vars.mlx);
 	mlx_hook(vars.win, 17, 0, close_window, &vars);
 	if (check_map(&vars) == -1)
 		return (error_print("Aborting\n"));

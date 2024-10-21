@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:11:02 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 02:35:26 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:16:32 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	f_fill(t_vars *vars, char *target, int row, int col)
 	}
 	else if (vars->map[row][col] == 'E')
 		vars->map[row][col] = 'X';
+	else if (vars->map[row][col] == 'K')
+		vars->map[row][col] = 'k';
 	else
 		vars->map[row][col] = ' ';
 	f_fill(vars, target, row - 1, col);

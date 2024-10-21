@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:16:39 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 00:46:00 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:32:14 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,32 @@ void	calculate_map_size(t_vars *vars)
 	vars->map_rows = i;
 }
 
+int	check_enemy(t_vars *vars)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < vars->map_rows)
+	{
+		j = 0;
+		while (j < vars->map_columns)
+		{
+			if (vars->map[i][j] == 'K' || vars->map[i][j] == 'k')
+			{
+				vars->enemy_pos_column = j;
+				vars->enemy_pos_row = i;
+				vars->enemy_exists = 1;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (vars->enemy_pos_column > 0 || vars->enemy_pos_row > 0)
+		return (1);
+	return (-1);
+}
+
 int	check_map(t_vars *vars)
 {
 	if (check_perimeter(vars) == -1)
@@ -105,6 +131,8 @@ int	check_map(t_vars *vars)
 	if (check_pe(vars) == -1)
 		return (error_print("Player/Exit error.\n"));
 	set_pe(vars);
+	if (check_enemy(vars) == -1)
+		ft_printf("This map has no enemies! :D\n");
 	if (check_flood(vars) == -1)
 		return (error_print("Flood fill error.\n"));
 	init_sprites(vars);

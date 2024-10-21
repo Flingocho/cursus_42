@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 00:56:05 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/17 01:30:24 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:23:55 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # define BUFF_SIZE 4096
 # define SPRITE_SIZE 32
+# define MLX_SYNC_IMAGE_WRITABLE 1
+# define MLX_SYNC_WIN_FLUSH_CMD 2
+# define MLX_SYNC_WIN_CMD_COMPLETED 3
 
 # include "mlx.h"
 # include "mlx_int.h"
@@ -42,6 +45,8 @@ typedef struct s_vars
 	void	*collectable_ptr;
 	void	*endtile_ptr;
 	void	*endtile_end_ptr;
+	void	*enemy_ptr;
+	void	*win_buffer;
 	// CHAR PTRS
 	char	*map_path;
 	char	*player_path;
@@ -50,6 +55,7 @@ typedef struct s_vars
 	char	*collectable_path;
 	char	*endtile_path;
 	char	*endtile_end_path;
+	char	*enemy_path;
 	// IMG DATA
 	int		img_width;
 	int		img_height;
@@ -59,6 +65,10 @@ typedef struct s_vars
 	// PLAYER POS DATA
 	int		player_pos_column;
 	int		player_pos_row;
+	// ENEMY POS DATA
+	int		enemy_pos_column;
+	int		enemy_pos_row;
+	int		enemy_exists;
 	// EP DATA
 	int		start_pos_column;
 	int		start_pos_row;
@@ -108,5 +118,7 @@ int			key_a(int keycode, t_vars *vars);
 int			key_d(int keycode, t_vars *vars);
 int			check_floor(t_vars *vars);
 void		free_resources(t_vars *vars);
+// ENEMY MOVES
+void		check_map_enemy(t_vars *vars);
 
 #endif
