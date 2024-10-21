@@ -6,14 +6,32 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:16:39 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 13:32:14 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:50:45 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "so_long.h"
 
-// PUT YOUR FUCKING STRCM HERE U STUPID
+char	*ft_strappend(char *s1, char *s2)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = -1;
+	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!new)
+		return (NULL);
+	while (s1[++i])
+		new[i] = s1[i];
+	while (s2[++j])
+		new[i++] = s2[j];
+	new[i] = '\0';
+	return (new);
+}
+
 int	check_map_name(char *argv)
 {
 	int	i;
@@ -21,7 +39,9 @@ int	check_map_name(char *argv)
 	i = ft_strlen(argv);
 	while (argv[i] >= 0)
 		if (argv[i--] == '.')
-			return (strcmp(&argv[i + 1], ".ber"));
+			if (ft_strncmp(&argv[i + 1], ".ber", ft_strlen(&argv[i + 1])
+					+ 4) == 0)
+				return (1);
 	return (-1);
 }
 
@@ -52,7 +72,9 @@ int	set_matrix(t_vars *vars)
 	if (alloc_buffer(vars) == -1)
 	{
 		close(vars->fd);
-		return (error_print("Eror allocation."));
+		if (vars->buffer)
+			free(vars->buffer);
+		return (-1);
 	}
 	ft_printf("%s\n", vars->buffer);
 	vars->map = ft_split(vars->buffer, '\n');
@@ -79,7 +101,7 @@ int	key_hook(int keycode, t_vars *vars)
 	str = ft_itoa(vars->moves);
 	render_moves(vars, str);
 	free(str);
-	ft_printf("counter = %d\n", vars->moves);
+	ft_printf("counter = %d\n\r", vars->moves);
 	return (0);
 }
 

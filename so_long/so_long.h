@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 00:56:05 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 14:23:55 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:36:42 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_vars
 	void	*endtile_ptr;
 	void	*endtile_end_ptr;
 	void	*enemy_ptr;
-	void	*win_buffer;
 	// CHAR PTRS
 	char	*map_path;
 	char	*player_path;
@@ -110,6 +109,7 @@ void		init_sprites(t_vars *vars);
 void		render_window(t_vars *vars);
 void		render_moves(t_vars *vars, char *str);
 int			error_print(char *str);
+char		*ft_strappend(char *s1, char *s2);
 // CONTROLS MANAGER
 int			key_esc(int keycode, t_vars *vars);
 int			key_w(int keycode, t_vars *vars);

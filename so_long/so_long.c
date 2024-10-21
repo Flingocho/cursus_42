@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:47:39 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 15:12:20 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:43:33 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	error_print(char *str)
 {
+	ft_printf("Error\n");
 	ft_printf("%s\n", str);
 	return (-1);
 }
@@ -68,17 +69,16 @@ void	init_vars(t_vars *vars)
 	vars->enemy_ptr = NULL;
 	vars->enemy_ptr = NULL;
 	vars->enemy_pos_column = 0;
-	vars->enemy_pos_row  = 0;
+	vars->enemy_pos_row = 0;
 	vars->enemy_exists = 0;
-	vars->win_buffer = NULL;
 }
 
-int close_window(t_vars *vars)
+int	close_window(t_vars *vars)
 {
-    printf("Window closed. Exiting...\n");
-    free_resources(vars);
-    exit(0);
-    return (0);
+	printf("Window closed. Exiting...\n");
+	free_resources(vars);
+	exit(0);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -86,24 +86,30 @@ int	main(int argc, char **argv)
 	t_vars	vars;
 
 	init_vars(&vars);
-	if (!(argc == 2 && check_map_name(argv[1]) == 0))
+	if (!(argc == 2 && check_map_name(argv[1]) == 1))
 	{
 		error_print("Invalid map name, opening default.\n");
 		vars.map_path = "map.ber";
 	}
 	else
-		vars.map_path = argv[1];
+		vars.map_path = ft_strappend("maps/", argv[1]);
 	if (!(set_matrix(&vars) == 1))
-		return (error_print("Map error.\n"));
+	{
+		error_print("Map error.\n");
+		close_window(&vars);
+	}
+		
 	calculate_map_size(&vars);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.map_columns * 32, (vars.map_rows
 				+ 1) * 32, "SO_LONG!");
 	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_do_key_autorepeaton(vars.mlx);
 	mlx_hook(vars.win, 17, 0, close_window, &vars);
 	if (check_map(&vars) == -1)
-		return (error_print("Aborting\n"));
+	{
+		error_print("Aborting\n");
+		return (close_window(&vars));
+	}
 	mlx_loop(vars.mlx);
 	free_resources(&vars);
 	return (0);

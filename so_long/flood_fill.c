@@ -6,20 +6,22 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 23:11:02 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 12:16:32 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:39:10 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "libft.h"
+#include "so_long.h"
 
 int	check_flood(t_vars *vars)
 {
 	if (vars->start_pos_row < 0 || vars->start_pos_column < 0
-		|| vars->start_pos_column >= vars->map_columns || vars->start_pos_row >= vars->map_rows)
+		|| vars->start_pos_column >= vars->map_columns
+		|| vars->start_pos_row >= vars->map_rows)
 		return (-1);
 	flood_fill(vars);
-	if (vars->map[vars->end_pos_row][vars->end_pos_column] == 'X' && vars->n_collectables == 0)
+	if (vars->map[vars->end_pos_row][vars->end_pos_column] == 'X'
+		&& vars->n_collectables == 0)
 		return (1);
 	return (-1);
 }
@@ -58,4 +60,3 @@ void	flood_fill(t_vars *vars)
 	target[2] = 'E';
 	f_fill(vars, target, vars->start_pos_row, vars->start_pos_column);
 }
-
