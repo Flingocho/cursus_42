@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.c                                          :+:      :+:    :+:   */
+/*   init_misc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 23:44:12 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 17:29:47 by jvidal-t         ###   ########.fr       */
+/*   Created: 2024/10/22 11:00:46 by jvidal-t          #+#    #+#             */
+/*   Updated: 2024/10/22 14:03:00 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "so_long.h"
 
-// PLACEHOLDER
 static void	get_sprites_info(t_vars *vars)
 {
 	vars->obstacle_path = "sprites/obstacle.xpm";
@@ -27,7 +26,7 @@ static void	get_sprites_info(t_vars *vars)
 	vars->img_height = SPRITE_SIZE;
 }
 
-void	render_number(t_vars *vars)
+static void	render_number(t_vars *vars)
 {
 	vars->n_0 = mlx_xpm_file_to_image(vars->mlx, "sprites/0.xpm",
 			&vars->img_width, &vars->img_height);
@@ -49,6 +48,64 @@ void	render_number(t_vars *vars)
 			&vars->img_width, &vars->img_height);
 	vars->n_9 = mlx_xpm_file_to_image(vars->mlx, "sprites/9.xpm",
 			&vars->img_width, &vars->img_height);
+}
+
+static void	init_vars_2(t_vars *vars)
+{
+	vars->win = NULL;
+	vars->fd = 0;
+	vars->bytes_read = 0;
+	vars->map_is_valid = 0;
+	vars->buffer = NULL;
+	vars->player_pos_column = 0;
+	vars->player_pos_row = 0;
+	vars->end_pos_column = 0;
+	vars->end_pos_row = 0;
+	vars->moves = 0;
+	vars->n_0 = NULL;
+	vars->n_1 = NULL;
+	vars->n_2 = NULL;
+	vars->n_3 = NULL;
+	vars->n_4 = NULL;
+	vars->n_5 = NULL;
+	vars->n_6 = NULL;
+	vars->n_7 = NULL;
+	vars->n_8 = NULL;
+	vars->n_9 = NULL;
+	vars->enemy_ptr = NULL;
+	vars->enemy_ptr = NULL;
+	vars->enemy_pos_column = 0;
+	vars->enemy_pos_row = 0;
+	vars->enemy_exists = 0;
+}
+
+void	init_vars(t_vars *vars)
+{
+	vars->map = NULL;
+	vars->player_ptr = NULL;
+	vars->floor_ptr = NULL;
+	vars->obstacle_ptr = NULL;
+	vars->collectable_ptr = NULL;
+	vars->endtile_ptr = NULL;
+	vars->endtile_end_ptr = NULL;
+	vars->map_path = NULL;
+	vars->player_path = NULL;
+	vars->floor_path = NULL;
+	vars->obstacle_path = NULL;
+	vars->collectable_path = NULL;
+	vars->endtile_path = NULL;
+	vars->endtile_end_path = NULL;
+	vars->img_width = 32;
+	vars->img_height = 32;
+	vars->map_columns = 0;
+	vars->map_rows = 0;
+	vars->start_pos_column = 0;
+	vars->start_pos_row = 0;
+	vars->n_collectables = 0;
+	vars->collectables = 0;
+	vars->can_move = 1;
+	vars->mlx = NULL;
+	init_vars_2(vars);
 }
 
 void	init_sprites(t_vars *vars)
@@ -73,52 +130,4 @@ void	init_sprites(t_vars *vars)
 	vars->player_pos_row = vars->start_pos_row;
 	vars->can_move = 1;
 	vars->moves = 0;
-}
-
-static void	put_img(t_vars *vars, int y, int x)
-{
-	if (vars->map[y][x] == '1')
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->obstacle_ptr, x
-			* SPRITE_SIZE, y * SPRITE_SIZE);
-	if (vars->map[y][x] == 'X')
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->endtile_ptr, x
-			* SPRITE_SIZE, y * SPRITE_SIZE);
-	if (vars->map[y][x] == ' ' || vars->map[y][x] == 'K')
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->floor_ptr, x
-			* SPRITE_SIZE, y * SPRITE_SIZE);
-	if (vars->map[y][x] == '@')
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->collectable_ptr, x
-			* SPRITE_SIZE, y * SPRITE_SIZE);
-	if (vars->map[y][x] == 'x')
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->endtile_end_ptr, x
-			* SPRITE_SIZE, y * SPRITE_SIZE);
-}
-
-void	render_window(t_vars *vars)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (vars->map_rows > i)
-	{
-		j = 0;
-		while (vars->map_columns > j)
-		{
-			put_img(vars, i, j);
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	while (i < vars->map_columns)
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->floor_ptr, i++
-			* SPRITE_SIZE, (vars->map_rows) * SPRITE_SIZE);
-	if (vars->enemy_exists == 1)
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->enemy_ptr,
-			vars->enemy_pos_column * SPRITE_SIZE, vars->enemy_pos_row
-			* SPRITE_SIZE);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_ptr,
-		vars->player_pos_column * SPRITE_SIZE, vars->player_pos_row
-		* SPRITE_SIZE);
 }

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enemy_moves.c                                      :+:      :+:    :+:   */
+/*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 12:38:00 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 20:06:41 by jvidal-t         ###   ########.fr       */
+/*   Created: 2024/10/22 11:24:24 by jvidal-t          #+#    #+#             */
+/*   Updated: 2024/10/22 13:38:47 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "so_long.h"
 
-void	move_set_1(t_vars *vars)
+static void	move_set_1(t_vars *vars)
 {
 	static int	direction;
 
@@ -38,7 +38,7 @@ void	move_set_1(t_vars *vars)
 	check_floor(vars);
 }
 
-void	move_set_2(t_vars *vars)
+static void	move_set_2(t_vars *vars)
 {
 	static int	direction;
 
@@ -63,7 +63,7 @@ void	move_set_2(t_vars *vars)
 	check_floor(vars);
 }
 
-void	move_set_3(t_vars *vars)
+static void	move_set_3(t_vars *vars)
 {
 	static int	direction;
 
@@ -90,11 +90,42 @@ void	move_set_3(t_vars *vars)
 
 void	check_map_enemy(t_vars *vars)
 {
-	// PUT YPUR FUCKING STRCMP
-	if (ft_strncmp(vars->map_path, "maps/map.ber", ft_strlen(vars->map_path)) == 0)
+	if (ft_strncmp(vars->map_path, "maps/map.ber",
+			ft_strlen(vars->map_path)) == 0)
 		move_set_1(vars);
-	if (ft_strncmp(vars->map_path, "maps/map2.ber", ft_strlen(vars->map_path)) == 0)
+	if (ft_strncmp(vars->map_path, "maps/map2.ber",
+			ft_strlen(vars->map_path)) == 0)
 		move_set_2(vars);
-	if (ft_strncmp(vars->map_path, "maps/map3.ber", ft_strlen(vars->map_path)) == 0)
+	if (ft_strncmp(vars->map_path, "maps/map3.ber",
+			ft_strlen(vars->map_path)) == 0)
 		move_set_3(vars);
+}
+
+int	check_enemy(t_vars *vars)
+{
+	int	i[3];
+
+	i[0] = 0;
+	i[2] = 0;
+	while (i[0] < vars->map_rows)
+	{
+		i[1] = 0;
+		while (i[1] < vars->map_columns)
+		{
+			if (vars->map[i[0]][i[1]] == 'K' || vars->map[i[0]][i[1]] == 'k')
+			{
+				vars->enemy_pos_column = i[1];
+				vars->enemy_pos_row = i[0];
+				vars->enemy_exists = 1;
+				i[2] += 1;
+			}
+			i[1]++;
+		}
+		i[0]++;
+	}
+	if (i[2] > 1)
+		return (-2);
+	if (vars->enemy_pos_column > 0 || vars->enemy_pos_row > 0)
+		return (1);
+	return (-1);
 }

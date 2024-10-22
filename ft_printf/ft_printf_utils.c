@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:31:42 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/03 20:18:05 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:53:10 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	format_selector(char const *format, va_list args)
 	else if (*format == 'X')
 		count += ft_putnbr_base(va_arg(args, int), "0123456789ABCDEF");
 	else if (*format == 'p')
-		count += ft_putptr(va_arg(args, unsigned long long), "0123456789abcdef",
-				1);
+		count += ft_putptr(va_arg(args, unsigned long long), "0123456789abcdef", 1);
 	return (count);
 }

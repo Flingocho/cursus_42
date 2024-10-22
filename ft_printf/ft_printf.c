@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:58:59 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/03 20:13:04 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:47:28 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_putptr(unsigned long long nbr, char *base, int first)
 		count += ft_putchar(base[nbr]);
 	return (count);
 }
-/*
+
 int	main(void)
 {
 	int		original;
@@ -182,4 +182,3 @@ int	main(void)
 		printf("Return values: KO :(\n");
 	return (0);
 }
-*/

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 00:56:05 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/21 18:36:42 by jvidal-t         ###   ########.fr       */
+/*   Created: 2024/10/22 10:42:01 by jvidal-t          #+#    #+#             */
+/*   Updated: 2024/10/22 14:03:06 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,33 +92,32 @@ typedef struct s_vars
 	void	*n_0;
 }			t_vars;
 
-// PROTOTYPES
+void		free_resources(t_vars *vars);
+int			close_window(t_vars *vars);
+int			error_print(char *str);
+void		init_vars(t_vars *vars);
 int			check_map_name(char *argv);
+char		*ft_strappend(char *s1, char *s2);
 int			set_matrix(t_vars *vars);
-int			key_hook(int keycode, t_vars *vars);
 void		calculate_map_size(t_vars *vars);
+void		render_moves(t_vars *vars, char *str);
+void		render_units(t_vars *vars, char c);
+void		render_tens(t_vars *vars, char c);
+void		render_hundreds(t_vars *vars, char c);
+void		render_window(t_vars *vars);
 int			check_map(t_vars *vars);
-int			check_perimeter(t_vars *vars);
-int			check_invalid_char(t_vars *vars);
-int			check_c(t_vars *vars);
-int			check_pe(t_vars *vars);
-void		set_pe(t_vars *vars);
+int			check_enemy(t_vars *vars);
 void		flood_fill(t_vars *vars);
 int			check_flood(t_vars *vars);
 void		init_sprites(t_vars *vars);
-void		render_window(t_vars *vars);
-void		render_moves(t_vars *vars, char *str);
-int			error_print(char *str);
-char		*ft_strappend(char *s1, char *s2);
-// CONTROLS MANAGER
+int			check_pe(t_vars *vars);
+// controls
 int			key_esc(int keycode, t_vars *vars);
 int			key_w(int keycode, t_vars *vars);
 int			key_s(int keycode, t_vars *vars);
 int			key_a(int keycode, t_vars *vars);
 int			key_d(int keycode, t_vars *vars);
-int			check_floor(t_vars *vars);
-void		free_resources(t_vars *vars);
-// ENEMY MOVES
 void		check_map_enemy(t_vars *vars);
+int			check_floor(t_vars *vars);
 
 #endif

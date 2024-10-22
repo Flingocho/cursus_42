@@ -1,17 +1,19 @@
-SRCS		=	so_long.c map_check.c controls_manager.c map_check_utils.c \
-                flood_fill.c sprites.c controls_manager_utils.c \
-				sprites_utils.c enemy_moves.c
+SRCS		=	so_long.c controls_manager.c counter_render.c counter_render_2.c \
+			flood_fill.c init_misc.c  map_operators.c map_check.c enemy.c \
+			misc_functions.c render_window.c terminate_process.c 
 INCLUDE		=	include
 LIBFT		=	libft
 FTPRINTF	=	ftprintf
 OBJDIR		=	objs/
 OBJS		=	$(SRCS:%.c=$(OBJDIR)%.o)
-CC			=	cc -I$(INCLUDE) #-Wall -Wextra -Werror
+CC			=	cc -I$(INCLUDE) -Wall -Wextra -Werror
 RM			=	rm -f
 AR			=	ar rcs
 NAME		=	so_long
 
 all:		lib $(NAME)
+
+bonus:		lib $(NAME)
 
 lib:
 			make -C $(LIBFT)
@@ -35,4 +37,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all lib clean fclean re
+.PHONY:		all lib clean fclean re bonus
