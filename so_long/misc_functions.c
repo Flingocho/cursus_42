@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:03:47 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/22 12:33:11 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:09:44 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	check_pe(t_vars *vars)
 		i[1] = 0;
 		while (i[1] < vars->map_columns)
 		{
-			if ((vars->map[i[0]][i[1]] == 'e' || vars->map[i[0]][i[1]] == 'E'))
+			if (vars->map[i[0]][i[1]] == 'E')
 				e += 1;
-			if ((vars->map[i[0]][i[1]] == 'p' || vars->map[i[0]][i[1]] == 'P'))
+			if (vars->map[i[0]][i[1]] == 'P')
 				p += 1;
 			i[1]++;
 		}

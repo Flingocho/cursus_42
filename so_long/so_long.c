@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:41:48 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/22 14:12:50 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:19:48 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv)
 	{
 		error_print("Invalid map name, opening default.\n");
 		vars.map_path = ft_strdup("maps/map.ber");
-		if(!vars.map_path)
+		if (!vars.map_path)
 		{
 			error_print("path error");
 			free_resources(&vars);

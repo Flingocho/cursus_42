@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:24:24 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/22 13:38:47 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:08:20 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	move_set_1(t_vars *vars)
 
 	if (vars->can_move == 1)
 	{
-		if (strcmp(vars->enemy_path, "sprites/enemy.xpm") == 0)
-			vars->enemy_path = "sprites/enemy2.xpm";
+		if (strcmp(vars->enemy_path, "textures/enemy.xpm") == 0)
+			vars->enemy_path = "textures/enemy2.xpm";
 		else
-			vars->enemy_path = "sprites/enemy.xpm";
+			vars->enemy_path = "textures/enemy.xpm";
 		mlx_destroy_image(vars->mlx, vars->enemy_ptr);
 		vars->enemy_ptr = mlx_xpm_file_to_image(vars->mlx, vars->enemy_path,
 				&vars->img_width, &vars->img_height);
@@ -35,7 +35,6 @@ static void	move_set_1(t_vars *vars)
 		if (direction == 1)
 			vars->enemy_pos_row -= 1;
 	}
-	check_floor(vars);
 }
 
 static void	move_set_2(t_vars *vars)
@@ -44,10 +43,10 @@ static void	move_set_2(t_vars *vars)
 
 	if (vars->can_move == 1)
 	{
-		if (strcmp(vars->enemy_path, "sprites/enemy.xpm") == 0)
-			vars->enemy_path = "sprites/enemy2.xpm";
+		if (strcmp(vars->enemy_path, "textures/enemy.xpm") == 0)
+			vars->enemy_path = "textures/enemy2.xpm";
 		else
-			vars->enemy_path = "sprites/enemy.xpm";
+			vars->enemy_path = "textures/enemy.xpm";
 		mlx_destroy_image(vars->mlx, vars->enemy_ptr);
 		vars->enemy_ptr = mlx_xpm_file_to_image(vars->mlx, vars->enemy_path,
 				&vars->img_width, &vars->img_height);
@@ -60,7 +59,6 @@ static void	move_set_2(t_vars *vars)
 		if (direction == 1)
 			vars->enemy_pos_row -= 1;
 	}
-	check_floor(vars);
 }
 
 static void	move_set_3(t_vars *vars)
@@ -69,10 +67,10 @@ static void	move_set_3(t_vars *vars)
 
 	if (vars->can_move == 1)
 	{
-		if (strcmp(vars->enemy_path, "sprites/enemy.xpm") == 0)
-			vars->enemy_path = "sprites/enemy2.xpm";
+		if (strcmp(vars->enemy_path, "textures/enemy.xpm") == 0)
+			vars->enemy_path = "textures/enemy2.xpm";
 		else
-			vars->enemy_path = "sprites/enemy.xpm";
+			vars->enemy_path = "textures/enemy.xpm";
 		mlx_destroy_image(vars->mlx, vars->enemy_ptr);
 		vars->enemy_ptr = mlx_xpm_file_to_image(vars->mlx, vars->enemy_path,
 				&vars->img_width, &vars->img_height);
@@ -85,7 +83,6 @@ static void	move_set_3(t_vars *vars)
 		if (direction == 1)
 			vars->enemy_pos_row -= 1;
 	}
-	check_floor(vars);
 }
 
 void	check_map_enemy(t_vars *vars)
@@ -112,7 +109,7 @@ int	check_enemy(t_vars *vars)
 		i[1] = 0;
 		while (i[1] < vars->map_columns)
 		{
-			if (vars->map[i[0]][i[1]] == 'K' || vars->map[i[0]][i[1]] == 'k')
+			if (vars->map[i[0]][i[1]] == 'K')
 			{
 				vars->enemy_pos_column = i[1];
 				vars->enemy_pos_row = i[0];

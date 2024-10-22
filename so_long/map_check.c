@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:20:55 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/22 14:13:41 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:16:18 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	check_invalid_char(t_vars *vars)
 		{
 			if (vars->map[i][j] != '1' && vars->map[i][j] != '0'
 				&& vars->map[i][j] != 'P' && vars->map[i][j] != 'E'
-				&& vars->map[i][j] != 'C' && vars->map[i][j] != 'X'
 				&& vars->map[i][j] != 'C' && vars->map[i][j] != 'K')
 				return (-1);
 			j++;
@@ -65,7 +64,7 @@ static int	check_c(t_vars *vars)
 		j = 0;
 		while (j < vars->map_columns)
 		{
-			if (vars->map[i][j] == 'c' || vars->map[i][j] == 'C')
+			if (vars->map[i][j] == 'C')
 				vars->n_collectables += 1;
 			j++;
 		}
@@ -120,7 +119,7 @@ int	check_map(t_vars *vars)
 	set_pe(vars);
 	if (check_enemy(vars) == -1)
 		ft_printf("This map has no enemies! :D\n");
-	if	(check_enemy(vars) == -2)
+	if (check_enemy(vars) == -2)
 		return (error_print("Too many enemies.\n"));
 	if (check_flood(vars) == -1)
 		return (error_print("Flood fill error.\n"));
