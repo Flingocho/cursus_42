@@ -1,5 +1,7 @@
 SRCS		=	push_swap.c rotate.c rev_rotate.c sort_3.c \
-				push.c swap.c stack_init.c
+				push.c swap.c stack_init.c handle_errors.c \
+				init_a_to_b.c init_b_to_a.c stack_utils.c \
+				sort_stacks.c
 INCLUDE		=	include
 LIBFT		=	libft
 FTPRINTF	=	ftprintf

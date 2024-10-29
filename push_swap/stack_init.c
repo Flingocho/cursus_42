@@ -78,7 +78,6 @@ void	init_stack_a(t_stack_node **a, char **argv)
 		append_node(a, (int)n);
 		i++;
 	}
-	return (NULL);
 }
 
 t_stack_node	*get_cheapest(t_stack_node *stack)

@@ -33,7 +33,7 @@ void sa(t_stack_node **a, bool print)
         ft_printf("sa\n");
 }
 
-void sa(t_stack_node **b, bool print)
+void sb(t_stack_node **b, bool print)
 {
     swap(b);
     if(!print)

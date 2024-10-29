@@ -41,7 +41,7 @@ void rrb(t_stack_node **b, bool print)
         ft_printf("rrb\n");
 }
 
-void rrr(t_stack_node *a, t_stack_node *b, bool print)
+void rrr(t_stack_node **a, t_stack_node **b, bool print)
 {
     rev_rotate(a);
     rev_rotate(b);
