@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:48:15 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/23 17:55:02 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:04:25 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void swap(t_stack_node **head)
 {
-    if(!head || !(*head)->next)
+    if(!*head || !(*head)->next)
         return ;
     *head = (*head)->next;
     (*head)->prev->prev = *head;

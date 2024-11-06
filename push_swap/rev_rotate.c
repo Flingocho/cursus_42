@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:40:48 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/23 17:47:49 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:22:12 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void rev_rotate(t_stack_node **stack)
 {
     t_stack_node *last;
     
-    if(!stack || !(*stack)->next)
+    if(!*stack || !(*stack)->next)
         return ;
     last = find_last(*stack);
     last->prev->next = NULL;
@@ -46,5 +46,5 @@ void rrr(t_stack_node **a, t_stack_node **b, bool print)
     rev_rotate(a);
     rev_rotate(b);
     if(!print)
-        ft_printf("rra\n");
+        ft_printf("rrr\n");
 }

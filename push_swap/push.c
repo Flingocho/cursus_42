@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:01:48 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/23 18:10:02 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:27:14 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void push(t_stack_node **dst, t_stack_node **src)
 {
     t_stack_node *push_node;
     
-    if(!src)
+    if(!*src)
         return ;
     push_node = *src;
     *src = (*src)->next;
@@ -40,13 +40,13 @@ void push(t_stack_node **dst, t_stack_node **src)
 void pa(t_stack_node **a, t_stack_node **b, bool print)
 {
     push(a, b);
-    if(!printf)
-        printf("pa\n");
+    if(!print)
+        ft_printf("pa\n");
 }
 
 void pb(t_stack_node **b, t_stack_node **a, bool print)
 {
     push(b, a);
-    if(!printf)
-        printf("pb\n");
+    if(!print)
+        ft_printf("pb\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:03:02 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/16 20:22:41 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:03:15 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	*clear_split(char **split)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**split;
 	int		index[3];

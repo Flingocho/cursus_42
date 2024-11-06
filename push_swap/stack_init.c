@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:35:26 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/24 19:57:25 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:26:30 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	append_node(t_stack_node **stack, int n)
 	if (!(*stack))
 	{
 		*stack = node;
-		node->prev == NULL;
+		node->prev = NULL;
 	}
 	else
 	{
@@ -90,6 +90,7 @@ t_stack_node	*get_cheapest(t_stack_node *stack)
 			return (stack);
 		stack = stack->next;
 	}
+	return(NULL);
 }
 
 void	prep_for_push(t_stack_node **stack, t_stack_node *top_node,

@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:08:06 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/16 21:58:55 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:03:34 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char				*ft_strrchr(const char *s, int c);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s1, char const *set);
-char				**ft_split(char const *s, char c);
+char				**ft_split(char *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_putchar_fd(char c, int fd);
