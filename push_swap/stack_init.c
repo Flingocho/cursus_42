@@ -6,14 +6,14 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:35:26 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/29 17:26:30 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:52:08 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "push_swap.h"
 
-long ft_atol(const char *s)
+long	ft_atol(const char *s)
 {
 	long	result;
 	int		sign;
@@ -90,7 +90,7 @@ t_stack_node	*get_cheapest(t_stack_node *stack)
 			return (stack);
 		stack = stack->next;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 void	prep_for_push(t_stack_node **stack, t_stack_node *top_node,

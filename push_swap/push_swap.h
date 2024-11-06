@@ -6,19 +6,18 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:52:12 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/10/23 17:18:15 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 21:13:34 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+# include "libft.h"
 # include <limits.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include <unistd.h>
 # include <stdlib.h>
-# include "libft.h"
-#endif
+# include <unistd.h>
 
 typedef struct s_stack_node
 {
@@ -91,3 +90,10 @@ void					move_a_to_b(t_stack_node **a, t_stack_node **b);
 void					move_b_to_a(t_stack_node **a, t_stack_node **b);
 void					min_on_top(t_stack_node **a);
 void					sort_stacks(t_stack_node **a, t_stack_node **b);
+char					*ft_joinchar(char *s1, char s2);
+int						peasoifses(char **movements, t_stack_node **a,
+							t_stack_node **b);
+void					peasoifses2(char *move, t_stack_node **a,
+							t_stack_node **b);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:01:46 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/11/06 17:01:47 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:56:00 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_stack_node	*find_min(t_stack_node *stack)
 
 t_stack_node	*find_max(t_stack_node *stack)
 {
-	long max;
-	t_stack_node *max_node;
+	long			max;
+	t_stack_node	*max_node;
 
 	if (!stack)
 		return (NULL);

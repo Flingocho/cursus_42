@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:08:06 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/11/06 15:03:34 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 20:56:30 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
