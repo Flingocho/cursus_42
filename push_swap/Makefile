@@ -7,7 +7,7 @@ LIBFT		=	libft
 FTPRINTF	=	ftprintf
 OBJDIR		=	objs/
 OBJS		=	$(SRCS:%.c=$(OBJDIR)%.o)
-CC			=	cc -I$(INCLUDE) #-Wall -Wextra -Werror
+CC			=	cc -I$(INCLUDE) -Wall -Wextra -Werror
 RM			=	rm -f
 AR			=	ar rcs
 NAME		=	push_swap

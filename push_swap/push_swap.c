@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:51:04 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/11/06 15:46:02 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:50:01 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ int	main(int argc, char **argv)
 	if (argc == 1 || (argc == 2 && !argv[1][0]))
 		return (1);
 	else if (argc == 2)
+	{
 		argv = ft_split(argv[1], ' ');
-	init_stack_a(&a, argv + 1);
+		init_stack_a(&a, argv);
+	}
+	else
+		init_stack_a(&a, argv + 1);
 	if (!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
