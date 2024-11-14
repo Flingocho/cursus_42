@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "minitalk.h"
+#include <signal.h>
 
 /*	
 	

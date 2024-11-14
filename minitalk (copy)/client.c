@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "minitalk.h"
+#include <signal.h>
 
 static int	g_message_delivered;
 
