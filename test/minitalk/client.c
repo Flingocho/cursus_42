@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:18:31 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/11/12 16:06:05 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:41:42 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,22 @@ int	check_errors(t_mini *client, char **argv)
 	client->pid = ft_atoi(argv[1]);
 	if (client->pid < 0)
 		return (-1);
-	i = -1;
-	while (argv[2][++i])
-		if (!ft_isprint(argv[2][i]))
-		{
-			ft_printf("char set not printable!\n");
-			return (-1);
-		}
+	// i = -1;
+	// while (argv[2][++i])
+	// 	if (!ft_isprint(argv[2][i]))
+	// 	{
+	// 		ft_printf("char set not printable!\n");
+	// 		return (-1);
+	// 	}
 	return (0);
 }
 
 void	send_len_by_bits(t_mini *client)
 {
 	int	i;
-	int temp;
+	int	temp;
 
 	temp = client->len;
-
 	i = -1;
 	while (++i < 32)
 	{
@@ -68,20 +67,23 @@ void	send_len_by_bits(t_mini *client)
 void	send_char_by_bits(unsigned char c, int pid)
 {
 	int	i;
+	int	s;
 
 	i = -1;
 	while (++i < 8)
 	{
-		if (c & 0x01)
-			kill(pid, SIGUSR2);
-		else
-			kill(pid, SIGUSR1);
-		c = c >> 1;
-		usleep(WAIT_TIME);
+		if (s == SIGUSR1)
+		{
+			if (c & 0x01)
+				kill(pid, SIGUSR2);
+			else
+				kill(pid, SIGUSR1);
+			c = c >> 1;
+		}
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_mini client;
 	int i;

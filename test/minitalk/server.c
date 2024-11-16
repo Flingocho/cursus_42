@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:19:03 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/11/12 17:16:37 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:46:23 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	get_info(int signal)
 		{
 			current_bit++;
 		}
+		kill(pid, SIGUSR1);
 	}
 }
 int	main(void)

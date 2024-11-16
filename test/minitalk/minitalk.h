@@ -6,7 +6,7 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:52:12 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/11/12 17:05:46 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:37:53 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <signal.h>
 # define MAX_BITS 31
 # define WAIT_TIME 42
-
 typedef struct s_mini
 {
 	int					pid;
