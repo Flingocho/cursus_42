@@ -5,8 +5,8 @@ void	*work(void *arg)
 	t_data	*data;
 
 	data = (t_data *)arg;
-	printf("I'm philosopfer number %ld!\n", data->i);
-	printf("I need to eat %d times!\n", data->philo.number_of_times_to_eat);
+	printf(GREEN "I'm philosopfer number %ld!\n", data->i);
+	printf("I need to eat %d times!"RESET"\n", data->philo.number_of_times_to_eat);
 	return (NULL);
 }
 
@@ -37,8 +37,11 @@ int	main(int argc, char **argv)
 
 	// create n_philosophers threads
 	while (data.i < data.n_philosophers)
+	{
 		if (pthread_create(&philo[data.i++], NULL, work, (void *)&data))
 			return (ERROR);
+		usleep(100);
+	}
 
 	// wait for all threads to end
 	data.i = 0;

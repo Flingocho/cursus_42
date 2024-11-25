@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_errors.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 20:09:32 by jvidal-t          #+#    #+#             */
+/*   Updated: 2024/11/25 20:13:16 by jvidal-t         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	check_digits(char *str)
@@ -5,8 +17,11 @@ int	check_digits(char *str)
 	int	i;
 
 	i = 0;
-	while (ft_isdigit(str[i]))
-		i++;
+	while (str[i])
+		if(ft_isdigit(str[i]) == 0)
+			i++;
+		else
+			return(ERROR);
 	if (str[i] == '\0')
 		return (0);
 	else
