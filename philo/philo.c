@@ -6,11 +6,36 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:48:32 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/12/03 13:21:54 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:21:36 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	get_forks(t_data *data)
+{
+	if (data->philo.philo_id != data->n_philosophers)
+	{
+		if (data->philo.forks[data->philo.philo_id] == 0
+			&& data->philo.forks[data->philo.philo_id - 1] == 0)
+		{
+			data->philo.forks[data->philo.philo_id] = 1;
+			data->philo.forks[data->philo.philo_id - 1] = 1;
+			return (true);
+		}
+	}
+	else if (data->philo.philo_id == data->n_philosophers)
+	{
+		if (data->philo.forks[data->philo.philo_id - 1] == 0
+			&& data->philo.forks[0] == 0)
+		{
+			data->philo.forks[data->philo.philo_id - 1] = 1;
+			data->philo.forks[0] = 1;
+			return (true);
+		}
+	}
+	return (false);
+}
 
 bool	check_alive(t_data *data)
 {
@@ -19,7 +44,8 @@ bool	check_alive(t_data *data)
 	{
 		printf(RED "%ld philosopfer number %d DEAD!\n" RESET "",
 			data->tv.tv_usec, data->philo.philo_id);
-		return (false);
+		pthread_exit(NULL);
+		//aqui hay que cerrar todos los hilos
 	}
 	return (true);
 }
@@ -28,9 +54,6 @@ void	philo_think(t_data *data)
 {
 	if (check_alive(data))
 	{
-		gettimeofday(&data->tv, NULL);
-		printf("%ld philosopher %d is thinking...\n", data->tv.tv_usec,
-			data->philo.philo_id);
 		data->philo.saciated = false;
 	}
 }
@@ -57,7 +80,8 @@ void	eat(t_data *data)
 		usleep(data->philo.time_to_eat);
 		data->philo.saciated = true;
 		gettimeofday(&data->tv, NULL);
-		data->philo.death_threshold = data->tv.tv_usec + data->philo.time_to_die;
+		data->philo.death_threshold = data->tv.tv_usec
+			+ data->philo.time_to_die;
 		if (data->philo.philo_id != data->n_philosophers)
 		{
 			data->philo.forks[data->philo.philo_id] = 0;
@@ -79,25 +103,10 @@ void	try_to_eat(t_data *data)
 	if (check_alive(data))
 	{
 		pthread_mutex_lock(&data->lock);
-		if (data->philo.philo_id != data->n_philosophers)
+		if (get_forks(data))
 		{
-			if (data->philo.forks[data->philo.philo_id] == 0
-				&& data->philo.forks[data->philo.philo_id - 1] == 0)
-			{
-				data->philo.forks[data->philo.philo_id] = 1;
-				data->philo.forks[data->philo.philo_id - 1] = 1;
-				eat(data);
-			}
-		}
-		else if (data->philo.philo_id == data->n_philosophers)
-		{
-			if (data->philo.forks[data->philo.philo_id - 1] == 0
-				&& data->philo.forks[0] == 0)
-			{
-				data->philo.forks[data->philo.philo_id - 1] = 1;
-				data->philo.forks[0] = 1;
-				eat(data);
-			}
+			pthread_mutex_unlock(&data->lock);
+			eat(data);
 		}
 		pthread_mutex_unlock(&data->lock);
 	}
@@ -106,14 +115,16 @@ void	try_to_eat(t_data *data)
 void	*work(void *arg)
 {
 	t_data	data;
-
+	
 	data = *(t_data *)arg;
 	data.philo.philo_id = data.i;
+	gettimeofday(&data.tv, NULL);
+	data.philo.death_threshold = data.tv.tv_usec + data.philo.time_to_die;
 	while (data.philo.alive && data.philo.number_of_times_to_eat != 0)
 	{
-		data.philo.alive = check_alive(&data);
-		if (data.philo.saciated == false)
-			try_to_eat(&data);
+		printf("%ld philosopher %d is thinking..\n", data.tv.tv_usec,
+			data.philo.philo_id);
+		try_to_eat(&data);
 	}
 	gettimeofday(&data.tv, NULL);
 	if (data.philo.alive && data.philo.number_of_times_to_eat == 0)
@@ -141,6 +152,7 @@ int	init_philosophers(t_data *data, char **argv)
 		data->philo.forks[i++] = 0;
 	return (0);
 }
+
 int	main(int argc, char **argv)
 {
 	t_data		data;
@@ -159,6 +171,7 @@ int	main(int argc, char **argv)
 	{
 		if (pthread_create(&philo[data.i++], NULL, work, (void *)&data))
 			return (ERROR);
+		usleep(100);
 	}
 	data.i = 0;
 	while (data.i < data.n_philosophers)
