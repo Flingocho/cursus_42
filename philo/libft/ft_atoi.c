@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 20:09:23 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/12/01 15:48:20 by jvidal-t         ###   ########.fr       */
+/*   Created: 2024/09/18 11:27:58 by jvidal-t          #+#    #+#             */
+/*   Updated: 2024/10/04 16:19:56 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "libft.h"
 
-int	ft_isdigit(char c)
-{
-	if (c >= 48 && c <= 57)
-		return (0);
-	return (ERROR);
-}
-
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
 	int	sign;
 	int	result;
@@ -34,7 +27,7 @@ int	ft_atoi(char *str)
 			sign = -1;
 		str++;
 	}
-	while (*str && ft_isdigit(*str) == 0)
+	while (*str && ft_isdigit(*str))
 	{
 		if (result > (INT_MAX - (*str - '0')) / 10)
 		{

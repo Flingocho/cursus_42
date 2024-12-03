@@ -59,7 +59,7 @@ int	ft_putnbr_base(unsigned int nb, char *base)
 	char	digit;
 
 	counter = 0;
-	if (nb > 16)
+	if (nb >= 16)
 		counter += ft_putnbr_base(nb / 16, base);
 	digit = base[nb % 16];
 	counter += ft_putchar(digit);
@@ -87,7 +87,7 @@ int	ft_printf(char *format, ...)
 						"0123456789abcdef");
 		}
 		else
-			ft_putchar(*format);
+			counter += ft_putchar(*format);
 		format++;
 	}
 	va_end(ap);
