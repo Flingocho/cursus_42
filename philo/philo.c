@@ -40,12 +40,13 @@ bool	get_forks(t_data *data)
 bool	check_alive(t_data *data)
 {
 	gettimeofday(&data->tv, NULL);
-	if (data->philo.death_threshold == data->tv.tv_usec)
+	if (data->philo.death_threshold >= data->tv.tv_sec * 1000 + data->tv.tv_usec
+		/ 1000)
 	{
 		printf(RED "%ld philosopfer number %d DEAD!\n" RESET "",
-			data->tv.tv_usec, data->philo.philo_id);
+			data->tv.tv_usec / 1000, data->philo.philo_id);
 		pthread_exit(NULL);
-		//aqui hay que cerrar todos los hilos
+		// aqui hay que cerrar todos los hilos
 	}
 	return (true);
 }
@@ -63,9 +64,9 @@ void	philo_sleep(t_data *data)
 	if (check_alive(data))
 	{
 		gettimeofday(&data->tv, NULL);
-		printf("%ld philosopher %d sleeping Zzz..\n", data->tv.tv_usec,
+		printf("%ld philosopher %d sleeping Zzz..\n", data->tv.tv_usec / 1000,
 			data->philo.philo_id);
-		usleep(data->philo.time_to_sleep);
+		usleep(data->philo.time_to_sleep * 1000);
 		philo_think(data);
 	}
 }
@@ -74,14 +75,13 @@ void	eat(t_data *data)
 {
 	if (check_alive(data))
 	{
-		gettimeofday(&data->tv, NULL);
-		printf("%ld philosopher %d eating nam nam\n", data->tv.tv_usec,
-			data->philo.philo_id);
-		usleep(data->philo.time_to_eat);
 		data->philo.saciated = true;
 		gettimeofday(&data->tv, NULL);
-		data->philo.death_threshold = data->tv.tv_usec
-			+ data->philo.time_to_die;
+		data->philo.death_threshold = (data->tv.tv_sec * 1000 + data->tv.tv_usec
+				/ 1000) + data->philo.time_to_die;
+		printf("%ld philosopher %d eating nam nam\n", data->tv.tv_usec / 1000,
+			data->philo.philo_id);
+		usleep(data->philo.time_to_eat * 1000);
 		if (data->philo.philo_id != data->n_philosophers)
 		{
 			data->philo.forks[data->philo.philo_id] = 0;
@@ -115,20 +115,20 @@ void	try_to_eat(t_data *data)
 void	*work(void *arg)
 {
 	t_data	data;
-	
+
 	data = *(t_data *)arg;
 	data.philo.philo_id = data.i;
 	gettimeofday(&data.tv, NULL);
-	data.philo.death_threshold = data.tv.tv_usec + data.philo.time_to_die;
+	data.philo.death_threshold = data.tv.tv_usec / 1000 + data.philo.time_to_die;
 	while (data.philo.alive && data.philo.number_of_times_to_eat != 0)
 	{
-		printf("%ld philosopher %d is thinking..\n", data.tv.tv_usec,
+		printf("%ld philosopher %d is thinking..\n", data.tv.tv_usec / 1000,
 			data.philo.philo_id);
 		try_to_eat(&data);
 	}
 	gettimeofday(&data.tv, NULL);
 	if (data.philo.alive && data.philo.number_of_times_to_eat == 0)
-		printf("%ld philoopher %d survived! :D\n", data.tv.tv_usec,
+		printf("%ld philoopher %d survived! :D\n", data.tv.tv_usec / 1000,
 			data.philo.philo_id);
 	return (NULL);
 }
@@ -146,7 +146,7 @@ int	init_philosophers(t_data *data, char **argv)
 	data->philo.number_of_times_to_eat = ft_atoi(argv[5]);
 	data->philo.alive = true;
 	data->philo.saciated = false;
-	data->philo.death_threshold = data->tv.tv_usec + data->philo.time_to_die;
+	data->philo.death_threshold = data->tv.tv_usec / 1000 + data->philo.time_to_die;
 	data->philo.forks = malloc(sizeof(int) * data->n_philosophers);
 	while (i < data->n_philosophers)
 		data->philo.forks[i++] = 0;
