@@ -6,12 +6,11 @@
 /*   By: jvidal-t <jvidal-t@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:48:32 by jvidal-t          #+#    #+#             */
-/*   Updated: 2024/12/03 18:21:36 by jvidal-t         ###   ########.fr       */
+/*   Updated: 2024/12/09 20:21:06 by jvidal-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 int	not_space_or_sign(char c)
 {
@@ -71,6 +70,37 @@ int	ft_perror(e_message msg)
 		write(2, "ex:: ./philo 5 800 200 200 7\n", 30);
 		return (ERROR);
 	}
+}
+
+void	print_status(e_message msg, t_data *ar, t_data *data)
+{
+	long	current_time_ms;
+
+	gettimeofday(&ar->tv, NULL);
+	current_time_ms = (ar->tv.tv_sec * 1000) + (ar->tv.tv_usec / 1000);
+	pthread_mutex_lock(&ar->print);
+	if (msg == MSG_THINK)
+		printf(BRIGHT_CYAN "%04ld philosopher number %03d is thinking!\n" RESET,
+			current_time_ms - data->sim_start, data->philo.id);
+	else if (msg == MSG_EAT)
+		printf(BRIGHT_YELLOW "%04ld philosopher number %03d is eating!\n" RESET,
+			current_time_ms - data->sim_start, data->philo.id);
+	else if (msg == MSG_SLEEP)
+		printf(BRIGHT_MAGENTA "%04ld philosopher number %03d is sleeping!\n" RESET,
+			current_time_ms - data->sim_start, data->philo.id);
+	else if (msg == MSG_FORK)
+		printf(BRIGHT_BLACK "%04ld philosopher number %03d has taken a fork!\n" RESET,
+			current_time_ms - data->sim_start, data->philo.id);
+	else if (msg == MSG_SURV)
+		printf(BRIGHT_GREEN "%04ld philosopher number %03d has SURVIVED\n" RESET,
+			current_time_ms - data->sim_start, data->philo.id);
+	else if (msg == MSG_DIE)
+	{
+		printf(BRIGHT_RED "%04ld philosopher number %03d HAS DIED!\n" RESET,
+			current_time_ms - data->sim_start, data->philo.id);
+		return ;
+	}
+	pthread_mutex_unlock(&ar->print);
 }
 
 int	check_argv(int argc, char **argv)
@@ -145,46 +175,37 @@ bool	check_alive(t_data *ar, t_data *data)
 	current_time_ms = (ar->tv.tv_sec * 1000) + (ar->tv.tv_usec / 1000);
 	if (current_time_ms >= data->philo.death_threshold)
 	{
-		printf(RED "%ld philosopher number %d DEAD!\n" RESET "",
-			current_time_ms, data->philo.id);
-		pthread_mutex_unlock(&ar->mutex_wait);
+		print_status(MSG_DIE, ar, data);
+		ar->all_alive = false;
 		pthread_exit(NULL);
 	}
 	return (true);
 }
 
-bool	get_forks(t_data *data)
-{
-	if (data->philo.id != data->n_philosophers)
-	{
-		if (data->forks[data->philo.id] == 0 && data->forks[data->philo.id
-			- 1] == 0)
-		{
-			data->forks[data->philo.id] = 1;
-			data->forks[data->philo.id - 1] = 1;
-			return (true);
-		}
-	}
-	else if (data->philo.id == data->n_philosophers)
-	{
-		if (data->forks[data->philo.id - 1] == 0 && data->forks[0] == 0)
-		{
-			data->forks[data->philo.id - 1] = 1;
-			data->forks[0] = 1;
-			return (true);
-		}
-	}
-	return (false);
-}
-
 void	philo_survived(t_data *ar, t_data *data)
 {
-	long	current_time_ms;
+	print_status(MSG_SURV, ar, data);
+}
 
-	gettimeofday(&ar->tv, NULL);
-	current_time_ms = (ar->tv.tv_sec * 1000) + (ar->tv.tv_usec / 1000);
-	printf(GREEN "%ld philosopher number %d has SURVIVED!\n" RESET "",
-		current_time_ms, data->philo.id);
+bool	get_forks(t_data *ar, t_data *data)
+{
+	if (data->philo.id != ar->n_philosophers)
+	{
+		if (!pthread_mutex_lock(&ar->forks[data->philo.id]))
+			print_status(MSG_FORK, ar, data);
+		if (!pthread_mutex_lock(&ar->forks[data->philo.id - 1]))
+			print_status(MSG_FORK, ar, data);
+		return (true);
+	}
+	else if (data->philo.id == ar->n_philosophers)
+	{
+		if (!pthread_mutex_lock(&ar->forks[0]))
+			print_status(MSG_FORK, ar, data);
+		if (!pthread_mutex_lock(&ar->forks[data->philo.id - 1]))
+			print_status(MSG_FORK, ar, data);
+		return (true);
+	}
+	return (false);
 }
 
 void	eat(t_data *ar, t_data *data)
@@ -196,19 +217,18 @@ void	eat(t_data *ar, t_data *data)
 		gettimeofday(&ar->tv, NULL);
 		current_time_ms = (ar->tv.tv_sec * 1000) + (ar->tv.tv_usec / 1000);
 		data->philo.death_threshold = current_time_ms + ar->time_to_die;
-		printf(CYAN "%ld philosopher number %d is eating!\n" RESET "",
-			current_time_ms, data->philo.id);
 		data->philo.times_ate++;
+		print_status(MSG_EAT, ar, data);
 		usleep(ar->time_to_eat * 1000);
 		if (data->philo.id != data->n_philosophers)
 		{
-			data->forks[data->philo.id] = 0;
-			data->forks[data->philo.id - 1] = 0;
+			pthread_mutex_unlock(&ar->forks[data->philo.id]);
+			pthread_mutex_unlock(&ar->forks[data->philo.id - 1]);
 		}
 		else if (data->philo.id == data->n_philosophers)
 		{
-			data->forks[data->philo.id - 1] = 0;
-			data->forks[0] = 0;
+			pthread_mutex_unlock(&ar->forks[0]);
+			pthread_mutex_unlock(&ar->forks[data->philo.id - 1]);
 		}
 		if (data->philo.times_ate == ar->number_of_times_to_eat)
 			ar->all_ate++;
@@ -225,38 +245,29 @@ void	try_to_eat(t_data *ar, t_data *data)
 {
 	while (check_alive(ar, data))
 	{
-		pthread_mutex_lock(&data->mutex_fork);
-		if (get_forks(data))
+		if (get_forks(ar, data) == true)
 		{
-			pthread_mutex_unlock(&data->mutex_fork);
-			eat(ar, data);
+			break ;
 		}
-		pthread_mutex_unlock(&data->mutex_fork);
 	}
+	eat(ar, data);
 }
 
 void	philo_think(t_data *ar, t_data *data)
 {
-	long	current_time_ms;
-
-	gettimeofday(&ar->tv, NULL);
-	current_time_ms = (ar->tv.tv_sec * 1000) + (ar->tv.tv_usec / 1000);
-	printf(YELLOW "%ld philosopher number %d is thinking!\n" RESET "",
-		current_time_ms, data->philo.id);
+	if (check_alive(ar, data))
+	{
+		print_status(MSG_THINK, ar, data);
+	}
 	if (check_alive(ar, data))
 		try_to_eat(ar, data);
 }
 
 void	philo_sleep(t_data *ar, t_data *data)
 {
-	long	current_time_ms;
-
 	if (check_alive(ar, data))
 	{
-		gettimeofday(&ar->tv, NULL);
-		current_time_ms = (ar->tv.tv_sec * 1000) + (ar->tv.tv_usec / 1000);
-		printf(MAGENTA "%ld philosopher number %d is sleeping!\n" RESET "",
-			current_time_ms, data->philo.id);
+		print_status(MSG_SLEEP, ar, data);
 		usleep(ar->time_to_sleep * 1000);
 		philo_think(ar, data);
 	}
@@ -269,19 +280,15 @@ void	*work(void *arg)
 
 	ar = (t_data *)arg;
 	data = *(t_data *)arg;
-	pthread_mutex_lock(&ar->mutex_id);
 	ar->threads_created++;
 	data.philo.id = ar->threads_created;
-	pthread_mutex_unlock(&ar->mutex_id);
 	while (true)
 	{
-		pthread_mutex_lock(&ar->mutex_wait);
 		if (ar->threads_created == ar->n_philosophers)
 		{
-			pthread_mutex_unlock(&ar->mutex_wait);
 			break ;
 		}
-		pthread_mutex_unlock(&ar->mutex_wait);
+		// limpiar threads si fallo hasta threads_created
 	}
 	init_philo(ar, &data);
 	philo_think(ar, &data);
@@ -298,24 +305,25 @@ int	main(int argc, char **argv)
 	data.threads_created = 0;
 	data.philo.times_ate = 0;
 	data.all_ate = 0;
-	pthread_mutex_init(&data.mutex_id, NULL);
-	pthread_mutex_init(&data.mutex_wait, NULL);
-	pthread_mutex_init(&data.mutex_fork, NULL);
-
-	data.forks = malloc(sizeof(int) * data.n_philosophers);
-	if (!data.forks)
-		return (ERROR);
-	while (data.i < data.n_philosophers)
-	{
-		data.forks[data.i] = 0;
-		data.i++;
-	}
 	data.i = 0;
+	data.all_alive = true;
+	pthread_mutex_init(&data.print, NULL);
 	if (OK == check_argv(argc, argv) && OK == parse_argv(argv, &data))
 	{
+		data.forks = malloc(sizeof(pthread_mutex_t) * data.n_philosophers);
+		if (!data.forks)
+			return (ft_perror(MSG_MALLOC));
+		while (data.i < data.n_philosophers)
+		{
+			pthread_mutex_init(&data.forks[data.i], NULL);
+			data.i++;
+			// check fail
+		}
 		philo = malloc(sizeof(pthread_t) * data.n_philosophers);
 		if (!philo)
 			return (ft_perror(MSG_MALLOC));
+		// fallo posteriores
+		data.i = 0;
 		while (data.i < data.n_philosophers)
 		{
 			if (pthread_create(&philo[data.i++], NULL, work, (void *)&data))
@@ -327,11 +335,12 @@ int	main(int argc, char **argv)
 		data.i = 0;
 		while (philo[data.i] && data.i < data.n_philosophers)
 		{
+			pthread_mutex_destroy(&data.forks[data.i]);
+			pthread_mutex_destroy(&data.print);
 			pthread_join(philo[data.i++], NULL);
 		}
 	}
 	else
 		return (ft_perror(MSG_EXIT));
-
 	return (0);
 }
