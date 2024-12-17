@@ -1,4 +1,5 @@
-SRCS		=	philo.c
+SRCS		=	philo.c philo_utils_1.c philo_utils_2.c \
+				philo_utils_3.c philo_utils_4.c
 INCLUDE		=	include
 LIBFT		=	libft
 OBJDIR		=	objs/
